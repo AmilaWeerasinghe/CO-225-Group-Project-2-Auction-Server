@@ -56,6 +56,8 @@ class ConnectionServer implements Runnable {
 		BufferedReader(new InputStreamReader(mySocket.getInputStream()));
 	    out = new 
 		PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
+		out.print("Enter User name and Press Enter\n"); // Send the said message to enter user name
+		out.flush(); // flush to network
 		this.name=in.readLine();
 	    String line, outline; 
 	    for(line = in.readLine(); 
