@@ -54,10 +54,10 @@ public class Display
 
     public static void main(String [] args) throws IOException { 
 	//Create and set up the window.
-        JFrame frame = new JFrame("TextDemo");
+        JFrame frame = new JFrame("Stocks.Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	StudentDB allowedUsers = new StudentDB("stocks.csv","Symbol","Price ");//give input as stocks.csv Symbol and Price
+	StockDB allowedUsers = new StockDB("stocks.csv","Symbol","Price ");//give input as stocks.csv Symbol and Price
 	VisualServer server = new VisualServer(MainServer.BASE_PORT,
 					       allowedUsers); 
         //Add contents to the window.
