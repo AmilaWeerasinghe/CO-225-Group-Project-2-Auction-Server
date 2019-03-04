@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner; 
+import java.util.*; 
 
 class ConnectionServer implements Runnable { 
     //name of the client is needed
@@ -13,6 +13,8 @@ class ConnectionServer implements Runnable {
     public static final String NAMENEED="Enter User Name";
    
     private String Symbol=null;
+    
+    private Date time;
     // some constants 
     public static final int WAIT_AUTH = 0; 
     public static final int AUTH_DONE = 1;
@@ -80,7 +82,8 @@ class ConnectionServer implements Runnable {
 		    break;
 		    /*****************************/
 		case AUTH_DONE: 
-		    mainServer.postMSG(this.name + " bids: " + line+" for "+Symbol); 
+		time =new Date();
+		    mainServer.postMSG(this.name + " bids: " + line+" for "+Symbol+" at "+time); 
 		    outline = MSG_POSTED; 
 		    break; 
 		default: 
