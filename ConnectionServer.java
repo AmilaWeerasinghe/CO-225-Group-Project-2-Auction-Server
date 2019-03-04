@@ -4,15 +4,22 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner; 
 
 class ConnectionServer implements Runnable { 
+    //name of the client is needed
+    private String name=null;
+    public static int NameGiven =0;
+    public static final String NAMENEED="Enter User Name";
+   
+    private String Symbol=null;
     // some constants 
     public static final int WAIT_AUTH = 0; 
     public static final int AUTH_DONE = 1;
 
-    public static final String WAIT_AUTH_MSG = "Registration Number pls!\n"; 
-    public static final String AUTH_DONE_MSG = "You are authorised to post\n"; 
-    public static final String MSG_POSTED    = "Your message posted\n"; 
+    public static final String WAIT_AUTH_MSG = "Symbol pls!\n"; //changed to ask the symbol
+    public static final String AUTH_DONE_MSG = "You are authorised to bid\n"; //changed as authorised to bid
+    public static final String MSG_POSTED    = "Your bid posted\n"; //changed as your bid is posted
 
     // per connection variables
     private Socket mySocket; // connection socket per thread 
@@ -36,14 +43,20 @@ class ConnectionServer implements Runnable {
     }
 
     public void run() { // can not use "throws .." interface is different
-	BufferedReader in=null; 
+   
+   
+    
+    
+    
+    BufferedReader in=null; 
 	PrintWriter out=null; 
+    
 	try { 
 	    in = new 
 		BufferedReader(new InputStreamReader(mySocket.getInputStream()));
 	    out = new 
 		PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
-		
+		this.name=in.readLine();
 	    String line, outline; 
 	    for(line = in.readLine(); 
 		line != null && !line.equals("quit"); 
@@ -52,10 +65,11 @@ class ConnectionServer implements Runnable {
 		switch(currentState) { 
 		case WAIT_AUTH: 
 		    // we are waiting for login name 
-		    // e number should be the line 
+		    // Symbol should be the line 
 		    if(mainServer.isAuthorized(line)) { 
-			currentState = AUTH_DONE; 
-			clientName   = mainServer.getName(line); 
+			currentState = AUTH_DONE;
+			this.Symbol=line; 
+			//clientName   = mainServer.getName(line); 
 			outline = AUTH_DONE_MSG; 
 		    }
 		    else { 
@@ -64,7 +78,7 @@ class ConnectionServer implements Runnable {
 		    break;
 		    /*****************************/
 		case AUTH_DONE: 
-		    mainServer.postMSG(this.clientName + " Says: " + line); 
+		    mainServer.postMSG(this.name + " bids: " + line+" for "+Symbol); 
 		    outline = MSG_POSTED; 
 		    break; 
 		default: 
