@@ -19,7 +19,7 @@ public class Display
     public Display(VisualServer server) { 
         super(new GridBagLayout());
 
-	textArea = new JTextArea(5, 20); 
+	textArea = new JTextArea(40, 60); 
 	textArea.setEditable(false); 	
 	JScrollPane scrollPane = new JScrollPane(textArea);
 	
